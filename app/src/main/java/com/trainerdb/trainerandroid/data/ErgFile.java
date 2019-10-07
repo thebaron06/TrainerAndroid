@@ -37,9 +37,9 @@ public class ErgFile implements Serializable {
         //List<String> lines = new ArrayList<String>();
         coursePoints = (points == null ? new ArrayList<ErgPoint>() : points);
         textPoints = (texts == null ? new ArrayList<TextPoint>() : texts);;
-        lapPoints = (laps == null ? new ArrayList<LapPoint>() : laps);;
+        lapPoints = (laps == null ? new ArrayList<LapPoint>() : laps);
 
-        duration = (long) coursePoints.get(coursePoints.size() - 1).t;
+        duration = coursePoints.isEmpty() ? 1 /* at least a ms */ : (long) coursePoints.get(coursePoints.size() - 1).t;
 
         int ftp = TrainApplication.getFTP();
         for (ErgPoint point: coursePoints) {

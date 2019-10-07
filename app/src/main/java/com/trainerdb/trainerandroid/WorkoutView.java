@@ -13,6 +13,7 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.trainerdb.trainerandroid.data.ErgPoint;
@@ -303,14 +304,25 @@ public class WorkoutView extends View {
 
 
         Path path = new Path();
-        PointF first = transform((float)ergs.get(0).t, 0);
+        Log.d("WorkoutView", "onDraw: " + ergs);
+        PointF first;
+        if (ergs.isEmpty())
+            first = transform(0,0);
+        else
+            first = transform((float)ergs.get(0).t, 0);
+
         path.moveTo(first.x, first.y);
 
         for (int i = 0; i < ergs.size(); i++) {
             PointF here = transform((float)ergs.get(i).t, (float)ergs.get(i).w);
             path.lineTo(here.x, here.y);
         }
-        PointF last = transform((float)ergs.get(ergs.size() - 1).t, 0);
+        PointF last;
+        if (ergs.isEmpty()) {
+            last = transform(0,0);
+        } else {
+            last = transform((float) ergs.get(ergs.size() - 1).t, 0);
+        }
         path.lineTo(last.x, last.y);
         path.lineTo(first.x, first.y);
 
